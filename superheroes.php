@@ -63,10 +63,30 @@ $superheroes = [
   ], 
 ];
 
+$input= $_REQUEST["input"];
+$input= filter_var($input);
+$exist= false;
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+<?php foreach ($superheroes as $superhero):{?> 
+    <?php if ($input == $superhero['alias'] or $input == $superhero['name']) { ?>
+        <h3><?=$superhero['alias'];?></h3>
+        <h4><?=$superhero['name'];?></h4> 
+        <p><?=$superhero['biography'];?></p>
+        <?php $exist = true; ?>
+    <?php }?>
+    <?php }?>
+ <?php endforeach; ?>
+
+
+<?php if ($input== "") {?>
+    <ul>
+    <?php foreach ($superheroes as $superhero): ?>
+    <li><?= $superhero['alias']; ?></li>
+    <?php endforeach; ?>
+    </ul>
+<?php } ?>
+
+<?php if ($input != "" and $exist == false){ ?>
+     <h4 style="color:red;">SUPERHERO NOT FOUND</h4>
+<?php } ?>
